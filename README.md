@@ -4,10 +4,31 @@ Public CDN repository for TrustLabs verification badges.
 
 ## 🚀 Usage
 
+### URL Options:
+
+**Main Branch (Latest):**
+```
+https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js
+```
+
+**Specific Version (Commit Hash):**
+```
+https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@63d7adb/dist/badge-element.v1.js
+```
+
+**Cache Busting (Add version parameter):**
+```
+https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js?v=2
+```
+
 ### For Partners:
 ```html
 <!-- Include the badge component -->
+<!-- Latest version (main branch) -->
 <script src="https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js"></script>
+
+<!-- Specific version (commit hash) - for immediate updates -->
+<script src="https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@63d7adb/dist/badge-element.v1.js"></script>
 
 <!-- Add badges to your site -->
 <trustlabs-badge email="user@example.com"></trustlabs-badge>
