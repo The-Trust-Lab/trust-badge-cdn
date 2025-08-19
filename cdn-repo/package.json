@@ -1,0 +1,23 @@
+{
+  "name": "trustlabs-badge-cdn",
+  "version": "1.0.0",
+  "description": "TrustLabs verification badge web component for third-party integration",
+  "main": "dist/badge-element.v1.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-Trust-Lab/trust-badge-cdn.git"
+  },
+  "keywords": [
+    "trustlabs",
+    "verification",
+    "badge",
+    "web-component",
+    "authentication"
+  ],
+  "author": "TrustLabs",
+  "license": "MIT",
+  "files": [
+    "dist/"
+  ],
+  "jsdelivr": "dist/badge-element.v1.js"
+}
