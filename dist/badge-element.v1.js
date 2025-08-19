@@ -107,3 +107,4 @@
         </div>
       </div>
     `}};customElements.define("trustlabs-badge",n);return g(v);})();
+// Updated Tue, Aug 19, 2025  4:44:10 PM
