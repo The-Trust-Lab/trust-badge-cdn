@@ -88,6 +88,7 @@
           visibility: hidden;
           opacity: 0;
           background-color: #ffffff;
+          background: #ffffff;
           border: 1px solid #ddd;
           border-radius: 8px;
           padding: 16px;
@@ -102,7 +103,6 @@
           color: #333;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           line-height: 1.4;
-          backdrop-filter: blur(10px);
         }
 
         .trustlabs-badge:hover .modal {
