@@ -1,12 +1,55 @@
-"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var m=Object.getOwnPropertyNames;var p=Object.prototype.hasOwnProperty;var h=(i,s)=>{for(var e in s)l(i,e,{get:s[e],enumerable:!0})},b=(i,s,e,a)=>{if(s&&typeof s=="object"||typeof s=="function")for(let t of m(s))!p.call(i,t)&&t!==e&&l(i,t,{get:()=>s[t],enumerable:!(a=u(s,t))||a.enumerable});return i};var g=i=>b(l({},"__esModule",{value:!0}),i);var v={};h(v,{TrustLabsBadge:()=>n});var n=class i extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(e,a,t){a!==t&&(this.updateAttributes(),e==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}i.instanceQueue.push({element:this,email:this.email}),i.processingQueue||setTimeout(()=>{i.processQueue()},0)}static async processQueue(){if(!(i.processingQueue||i.instanceQueue.length===0)){i.processingQueue=!0;try{await i.processInstanceGroup(i.instanceQueue)}catch(e){console.error("Error processing badge queue:",e),i.instanceQueue.forEach(a=>{a.element.showFallback()})}finally{i.instanceQueue=[],i.processingQueue=!1}}}static async processInstanceGroup(e){let a=e.map(t=>t.email).join(",");try{let t=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(a)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!t.ok)throw new Error(`HTTP ${t.status}: ${t.statusText}`);let o=await t.json(),d=new Map;o.results?.forEach(r=>{d.set(r.email,r)}),e.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(t){console.error("Error fetching trust status:",t),e.forEach(o=>{o.element.showFallback()})}}updateDisplay(e){let a=this.shadow.querySelector(".trustlabs-badge"),t=this.shadow.querySelector(".modal");if(!(!a||!t))if(e.verified){a.classList.remove("unverified"),a.classList.add("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";t.innerHTML=`
-        <div class="modal-title verified">Verified</div>
-        <div class="modal-row">
+"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var m=Object.prototype.hasOwnProperty;var g=(s,a)=>{for(var e in a)l(s,e,{get:a[e],enumerable:!0})},h=(s,a,e,t)=>{if(a&&typeof a=="object"||typeof a=="function")for(let i of p(a))!m.call(s,i)&&i!==e&&l(s,i,{get:()=>a[i],enumerable:!(t=u(a,i))||t.enumerable});return s};var b=s=>h(l({},"__esModule",{value:!0}),s);var v={};g(v,{TrustLabsBadge:()=>n});var n=class s extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(e,t,i){t!==i&&(this.updateAttributes(),e==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}s.instanceQueue.push({element:this,email:this.email}),s.processingQueue||setTimeout(()=>{s.processQueue()},0)}static async processQueue(){if(!(s.processingQueue||s.instanceQueue.length===0)){s.processingQueue=!0;try{await s.processInstanceGroup(s.instanceQueue)}catch(e){console.error("Error processing badge queue:",e),s.instanceQueue.forEach(t=>{t.element.showFallback()})}finally{s.instanceQueue=[],s.processingQueue=!1}}}static async processInstanceGroup(e){let t=e.map(i=>i.email).join(",");try{let i=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(t)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!i.ok)throw new Error(`HTTP ${i.status}: ${i.statusText}`);let o=await i.json(),d=new Map;o.results?.forEach(r=>{d.set(r.email,r)}),e.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(i){console.error("Error fetching trust status:",i),e.forEach(o=>{o.element.showNetworkError()})}}updateDisplay(e){let t=this.shadow.querySelector(".trustlabs-badge"),i=this.shadow.querySelector(".modal");if(!(!t||!i))if(e.verified){t.classList.remove("unverified"),t.classList.add("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";i.innerHTML=`
+        <div class="modal-title" style="color: #2e7d32; margin-bottom: 8px;">
+          <strong>Verified</strong>
+        </div>
+        <div class="modal-row" style="margin-bottom: 8px;">
           <strong>Verified since:</strong> ${o}
         </div>
-      `}else a.classList.add("unverified"),a.classList.remove("verified"),t.innerHTML=`
-        <div class="modal-title unverified">Not Verified</div>
-      `}showFallback(){let e=this.shadow.querySelector(".trustlabs-badge"),a=this.shadow.querySelector(".modal");!e||!a||(e.classList.add("unverified"),e.classList.remove("verified"),a.innerHTML=`
-      <div class="modal-title error">Verification Unavailable</div>
+        <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+          <a href="https://trustlabs.pro" 
+             style="color: #0066cc; text-decoration: none; display: block;">
+            Learn more about Trust Verification
+          </a>
+        </div>
+      `}else{t.classList.add("unverified"),t.classList.remove("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"N/A";i.innerHTML=`
+        <div class="modal-title" style="color: #757575; margin-bottom: 8px;">
+          <strong>Not Verified</strong>
+        </div>
+        <div class="modal-row" style="margin-bottom: 8px;">
+          This user has not completed trust verification.
+        </div>
+        <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+          <a href="https://trustlabs.pro" 
+             style="color: #0066cc; text-decoration: none; display: block;">
+            Learn more about Trust Verification
+          </a>
+        </div>
+      `}}showFallback(){let e=this.shadow.querySelector(".trustlabs-badge"),t=this.shadow.querySelector(".modal");!e||!t||(e.classList.add("unverified"),e.classList.remove("verified"),t.innerHTML=`
+      <div class="modal-title" style="color: #757575; margin-bottom: 8px;">
+        <strong>User Not Found</strong>
+      </div>
+      <div class="modal-row" style="margin-bottom: 8px;">
+        This user has not registered for trust verification.
+      </div>
+      <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+        <a href="https://trustlabs.pro" 
+           style="color: #0066cc; text-decoration: none; display: block;">
+          Learn more about Trust Verification
+        </a>
+      </div>
+    `)}showNetworkError(){let e=this.shadow.querySelector(".trustlabs-badge"),t=this.shadow.querySelector(".modal");!e||!t||(e.classList.add("unverified"),e.classList.remove("verified"),t.innerHTML=`
+      <div class="modal-title" style="color: #757575; margin-bottom: 8px;">
+        <strong>Verification Unknown</strong>
+      </div>
+      <div class="modal-row" style="margin-bottom: 8px;">
+        Unable to fetch verification status. Please try again later.
+      </div>
+      <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
+        <a href="https://trustlabs.pro" 
+           style="color: #0066cc; text-decoration: none; display: block;">
+          Learn more about Trust Verification
+        </a>
+      </div>
     `)}render(){this.shadow.innerHTML=`
       <style>
         :host {
@@ -106,4 +149,4 @@
           <div class="modal-title">Loading verification status...</div>
         </div>
       </div>
-    `}};customElements.define("trustlabs-badge",n);return g(v);})();
+    `}};customElements.define("trustlabs-badge",n);return b(v);})();
