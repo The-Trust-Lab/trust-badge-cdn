@@ -1,9 +1,9 @@
-"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var m=Object.getOwnPropertyNames;var u=Object.prototype.hasOwnProperty;var g=(a,s)=>{for(var t in s)l(a,t,{get:s[t],enumerable:!0})},b=(a,s,t,e)=>{if(s&&typeof s=="object"||typeof s=="function")for(let i of m(s))!u.call(a,i)&&i!==t&&l(a,i,{get:()=>s[i],enumerable:!(e=p(s,i))||e.enumerable});return a};var h=a=>b(l({},"__esModule",{value:!0}),a);var v={};g(v,{TrustLabsBadge:()=>n});var n=class a extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(t,e,i){e!==i&&(this.updateAttributes(),t==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}a.instanceQueue.push({element:this,email:this.email}),a.processingQueue||setTimeout(()=>{a.processQueue()},0)}static async processQueue(){if(!(a.processingQueue||a.instanceQueue.length===0)){a.processingQueue=!0;try{await a.processInstanceGroup(a.instanceQueue)}catch(t){console.error("Error processing badge queue:",t),a.instanceQueue.forEach(e=>{e.element.showFallback()})}finally{a.instanceQueue=[],a.processingQueue=!1}}}static async processInstanceGroup(t){let e=t.map(i=>i.email).join(",");try{let i=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(e)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!i.ok)throw new Error(`HTTP ${i.status}: ${i.statusText}`);let o=await i.json(),d=new Map;o.results?.forEach(r=>{d.set(r.email,r)}),t.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(i){console.error("Error fetching trust status:",i),t.forEach(o=>{o.element.showNetworkError()})}}updateDisplay(t){let e=this.shadow.querySelector(".trustlabs-badge"),i=this.shadow.querySelector(".modal");if(!(!e||!i))if(t.verified){e.classList.remove("unverified"),e.classList.add("verified");let o=t.completed_at?new Date(t.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";i.innerHTML=`
+"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var m=Object.getOwnPropertyNames;var u=Object.prototype.hasOwnProperty;var g=(i,o)=>{for(var t in o)l(i,t,{get:o[t],enumerable:!0})},h=(i,o,t,e)=>{if(o&&typeof o=="object"||typeof o=="function")for(let a of m(o))!u.call(i,a)&&a!==t&&l(i,a,{get:()=>o[a],enumerable:!(e=p(o,a))||e.enumerable});return i};var b=i=>h(l({},"__esModule",{value:!0}),i);var v={};g(v,{TrustLabsBadge:()=>n});var n=class i extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(t,e,a){e!==a&&(this.updateAttributes(),t==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}i.instanceQueue.push({element:this,email:this.email}),i.processingQueue||setTimeout(()=>{i.processQueue()},0)}static async processQueue(){if(!(i.processingQueue||i.instanceQueue.length===0)){i.processingQueue=!0;try{await i.processInstanceGroup(i.instanceQueue)}catch(t){console.error("Error processing badge queue:",t),i.instanceQueue.forEach(e=>{e.element.showFallback()})}finally{i.instanceQueue=[],i.processingQueue=!1}}}static async processInstanceGroup(t){let e=t.map(a=>a.email).join(",");try{let a=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(e)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!a.ok)throw new Error(`HTTP ${a.status}: ${a.statusText}`);let s=await a.json(),d=new Map;s.results?.forEach(r=>{d.set(r.email,r)}),t.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(a){console.error("Error fetching trust status:",a),t.forEach(s=>{s.element.showNetworkError()})}}updateDisplay(t){let e=this.shadow.querySelector(".trustlabs-badge"),a=this.shadow.querySelector(".modal");if(!(!e||!a))if(t.verified){e.classList.remove("unverified"),e.classList.add("verified");let s=t.completed_at?new Date(t.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";a.innerHTML=`
         <div class="modal-title" style="color: #2e7d32; margin-bottom: 8px;">
           <strong>Verified</strong>
         </div>
         <div class="modal-row" style="margin-bottom: 8px;">
-          <strong>Verified since:</strong> ${o}
+          <strong>Verified since:</strong> ${s}
         </div>
         <div style="border-top: 1px solid #eee; padding-top: 8px; margin-top: 8px;">
           <a href="https://trustlabs.pro" 
@@ -11,7 +11,7 @@
             Learn more about Trust Verification
           </a>
         </div>
-      `}else{e.classList.add("unverified"),e.classList.remove("verified");let o=t.completed_at?new Date(t.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"N/A";i.innerHTML=`
+      `}else{e.classList.add("unverified"),e.classList.remove("verified");let s=t.completed_at?new Date(t.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"N/A";a.innerHTML=`
         <div class="modal-title" style="color: #757575; margin-bottom: 8px;">
           <strong>Not Verified</strong>
         </div>
@@ -84,26 +84,38 @@
         }
 
         .modal {
+          /* Positioning & Initial State */
           position: absolute !important;
-          visibility: hidden !important;
-          background: rgb(255, 255, 255) !important;
-          background-color: rgb(255, 255, 255) !important;
-          border: 1px solid #ddd !important;
-          border-radius: 8px !important;
-          padding: 12px !important;
-          box-shadow: 0 2px 10px rgb(0, 0, 0) !important;
-          z-index: 10000 !important;
+          display: none !important;
+          z-index: 2147483647 !important; /* Max z-index */
           width: 300px !important;
           left: calc(100% + 10px) !important;
           top: 50% !important;
           transform: translateY(-50%) !important;
+
+          /* Absolutely SOLID Background */
+          background-color: white !important;
+          background: white !important;
+          opacity: 1 !important;
+          
+          /* Border & Spacing */
+          border: 1px solid #c0c0c0 !important;
+          border-radius: 8px !important;
+          padding: 12px !important;
+
+          /* Font Styles */
           font-size: 14px !important;
-          color: #333 !important;
-          display: none !important;
+          color: black !important;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+
+          /* Remove ALL potential transparency sources */
+          box-shadow: none !important;
+          filter: none !important;
+          backdrop-filter: none !important;
+          transition: none !important;
         }
 
         .trustlabs-badge:hover .modal {
-          visibility: visible !important;
           display: block !important;
         }
 
@@ -146,4 +158,4 @@
           <div class="modal-title">Loading verification status...</div>
         </div>
       </div>
-    `}};customElements.define("trustlabs-badge",n);return h(v);})();
+    `}};customElements.define("trustlabs-badge",n);return b(v);})();
