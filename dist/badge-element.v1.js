@@ -1,4 +1,4 @@
-"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var p=Object.getOwnPropertyDescriptor;var u=Object.getOwnPropertyNames;var m=Object.prototype.hasOwnProperty;var g=(a,s)=>{for(var e in s)l(a,e,{get:s[e],enumerable:!0})},h=(a,s,e,t)=>{if(s&&typeof s=="object"||typeof s=="function")for(let i of u(s))!m.call(a,i)&&i!==e&&l(a,i,{get:()=>s[i],enumerable:!(t=p(s,i))||t.enumerable});return a};var b=a=>h(l({},"__esModule",{value:!0}),a);var f={};g(f,{TrustLabsBadge:()=>n});var n=class a extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(e,t,i){t!==i&&(this.updateAttributes(),e==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}a.instanceQueue.push({element:this,email:this.email}),a.processingQueue||setTimeout(()=>{a.processQueue()},0)}static async processQueue(){if(!(a.processingQueue||a.instanceQueue.length===0)){a.processingQueue=!0;try{await a.processInstanceGroup(a.instanceQueue)}catch(e){console.error("Error processing badge queue:",e),a.instanceQueue.forEach(t=>{t.element.showFallback()})}finally{a.instanceQueue=[],a.processingQueue=!1}}}static async processInstanceGroup(e){let t=e.map(i=>i.email).join(",");try{let i=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(t)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!i.ok)throw new Error(`HTTP ${i.status}: ${i.statusText}`);let o=await i.json(),d=new Map;o.results?.forEach(r=>{d.set(r.email,r)}),e.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(i){console.error("Error fetching trust status:",i),e.forEach(o=>{o.element.showNetworkError()})}}updateDisplay(e){let t=this.shadow.querySelector(".trustlabs-badge"),i=this.shadow.querySelector(".modal");if(!(!t||!i))if(e.verified){t.classList.remove("unverified"),t.classList.add("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";i.innerHTML=`
+"use strict";var TrustLabsBadge=(()=>{var l=Object.defineProperty;var u=Object.getOwnPropertyDescriptor;var p=Object.getOwnPropertyNames;var m=Object.prototype.hasOwnProperty;var h=(i,s)=>{for(var e in s)l(i,e,{get:s[e],enumerable:!0})},g=(i,s,e,t)=>{if(s&&typeof s=="object"||typeof s=="function")for(let a of p(s))!m.call(i,a)&&a!==e&&l(i,a,{get:()=>s[a],enumerable:!(t=u(s,a))||t.enumerable});return i};var b=i=>g(l({},"__esModule",{value:!0}),i);var v={};h(v,{TrustLabsBadge:()=>n});var n=class i extends HTMLElement{constructor(){super();this.email="";this.size="md";this.theme="auto";this.shadow=this.attachShadow({mode:"open"}),this.render()}static{this.instanceQueue=[]}static{this.processingQueue=!1}static get observedAttributes(){return["email","data-size","data-theme"]}connectedCallback(){this.updateAttributes(),this.registerInstance()}attributeChangedCallback(e,t,a){t!==a&&(this.updateAttributes(),e==="email"&&this.email&&this.registerInstance())}updateAttributes(){this.email=this.getAttribute("email")||"",this.size=this.getAttribute("data-size")||"md",this.theme=this.getAttribute("data-theme")||"auto"}registerInstance(){if(!this.email){this.showFallback();return}i.instanceQueue.push({element:this,email:this.email}),i.processingQueue||setTimeout(()=>{i.processQueue()},0)}static async processQueue(){if(!(i.processingQueue||i.instanceQueue.length===0)){i.processingQueue=!0;try{await i.processInstanceGroup(i.instanceQueue)}catch(e){console.error("Error processing badge queue:",e),i.instanceQueue.forEach(t=>{t.element.showFallback()})}finally{i.instanceQueue=[],i.processingQueue=!1}}}static async processInstanceGroup(e){let t=e.map(a=>a.email).join(",");try{let a=await fetch(`https://api.trustlabs.pro/api/public/trust-status?emails=${encodeURIComponent(t)}`,{method:"GET",headers:{"Content-Type":"application/json"},mode:"cors"});if(!a.ok)throw new Error(`HTTP ${a.status}: ${a.statusText}`);let o=await a.json(),d=new Map;o.results?.forEach(r=>{d.set(r.email,r)}),e.forEach(r=>{let c=d.get(r.email);c?r.element.updateDisplay(c):r.element.showFallback()})}catch(a){console.error("Error fetching trust status:",a),e.forEach(o=>{o.element.showNetworkError()})}}updateDisplay(e){let t=this.shadow.querySelector(".trustlabs-badge"),a=this.shadow.querySelector(".modal");if(!(!t||!a))if(e.verified){t.classList.remove("unverified"),t.classList.add("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"Unknown";a.innerHTML=`
         <div class="modal-title" style="color: #2e7d32; margin-bottom: 8px;">
           <strong>Verified</strong>
         </div>
@@ -11,7 +11,7 @@
             Learn more about Trust Verification
           </a>
         </div>
-      `}else{t.classList.add("unverified"),t.classList.remove("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"N/A";i.innerHTML=`
+      `}else{t.classList.add("unverified"),t.classList.remove("verified");let o=e.completed_at?new Date(e.completed_at).toLocaleDateString("en-US",{year:"numeric",month:"long",day:"numeric"}):"N/A";a.innerHTML=`
         <div class="modal-title" style="color: #757575; margin-bottom: 8px;">
           <strong>Not Verified</strong>
         </div>
@@ -85,31 +85,25 @@
 
         .modal {
           position: absolute;
-          visibility: hidden;
-          opacity: 0;
-          background-color: #ffffff !important;
-          background: #ffffff !important;
-          border: 1px solid #ccc;
-          border-radius: 8px;
-          padding: 16px;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-          z-index: 10000;
-          width: 250px;
-          left: calc(100% + 10px);
+          display: none;
+          background: white;
+          border: 2px solid #333;
+          border-radius: 6px;
+          padding: 12px;
+          box-shadow: 0 2px 8px black;
+          z-index: 99999;
+          width: 240px;
+          left: calc(100% + 8px);
           top: 50%;
           transform: translateY(-50%);
-          transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
-          font-size: 14px;
-          color: #333;
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          line-height: 1.4;
+          font-size: 13px;
+          color: black;
+          font-family: Arial, sans-serif;
+          line-height: 1.3;
         }
 
         .trustlabs-badge:hover .modal {
-          visibility: visible !important;
-          opacity: 1 !important;
-          background-color: #ffffff !important;
-          background: #ffffff !important;
+          display: block;
         }
 
         .modal-title {
@@ -151,4 +145,4 @@
           <div class="modal-title">Loading verification status...</div>
         </div>
       </div>
-    `}};customElements.define("trustlabs-badge",n);return b(f);})();
+    `}};customElements.define("trustlabs-badge",n);return b(v);})();
