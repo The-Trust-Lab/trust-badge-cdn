@@ -62,7 +62,7 @@
           box-shadow: 0 2px 10px rgba(0,0,0,0.1);
           z-index: 10000;
           width: 300px;
-          left: calc(100% + 2px);
+          left: calc(100%);
           top: 50%;
           transform: translateY(-50%);
           font-size: 14px;
