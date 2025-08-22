@@ -4,31 +4,10 @@ Public CDN repository for TrustLabs verification badges.
 
 ## 🚀 Usage
 
-### URL Options:
-
-**Main Branch (Latest):**
-```
-https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js
-```
-
-**Specific Version (Commit Hash):**
-```
-https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@63d7adb/dist/badge-element.v1.js
-```
-
-**Cache Busting (Add version parameter):**
-```
-https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js?v=2
-```
-
 ### For Partners:
 ```html
 <!-- Include the badge component -->
-<!-- Latest version (main branch) -->
-<script src="https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-element.v1.js"></script>
-
-<!-- Specific version (commit hash) - for immediate updates -->
-<script src="https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@63d7adb/dist/badge-element.v1.js"></script>
+<script src="https://d15sfj1qkqbu2z.cloudfront.net/badge-element.v1.js"></script>
 
 <!-- Add badges to your site -->
 <trustlabs-badge email="user@example.com"></trustlabs-badge>
@@ -37,9 +16,9 @@ https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-elemen
 
 ## 📋 Requirements
 
-1. **Domain Registration**: Contact TrustLabs to register your domain
-2. **Include Script**: Add the script tag above
-3. **Add Badges**: Use `<trustlabs-badge>` elements with email attributes
+1. **Include Script**: Add the script tag above
+2. **Add Badges**: Use `<trustlabs-badge>` elements with email attributes
+3. **That's it!**: No domain registration required - works on any website
 
 ## 🔧 Attributes
 
@@ -49,8 +28,9 @@ https://cdn.jsdelivr.net/gh/The-Trust-Lab/trust-badge-cdn@main/dist/badge-elemen
 
 ## 🌟 Features
 
-- ✅ Automatic batching for performance
-- ✅ Hover tooltips with verification details
-- ✅ Responsive design
-- ✅ No dependencies
-- ✅ Cross-origin ready
+- ✅ **Automatic Batching**: Optimized API calls for performance
+- ✅ **Rich Tooltips**: Hover for detailed verification information
+- ✅ **Responsive Design**: Looks great on all devices
+- ✅ **Zero Dependencies**: Lightweight and fast
+- ✅ **Cross-Origin Ready**: CORS-enabled for global use
+- ✅ **Rate Limited**: Built-in protection against abuse
